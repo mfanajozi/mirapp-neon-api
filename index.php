@@ -36,16 +36,6 @@ try {
     if ($action === 'fetch_unprocessed') {
         $pdo->beginTransaction();
 
-        error_log("fetch_unprocessed: Starting transaction");
-        error_log("fetch_unprocessed: SQL = SELECT * FROM reports WHERE processed = 0 ORDER BY id LIMIT 5000");
-
-        // ... after $stmt->execute()
-        error_log("fetch_unprocessed: Fetched " . count($reports) . " rows");
-        error_log("fetch_unprocessed: IDs = " . json_encode(array_column($reports, 'id')));
-
-        // ... after $updateStmt->execute()
-        error_log("fetch_unprocessed: Updated " . ($updateStmt->rowCount() ?? 0) . " rows");
-
         // Fetch unprocessed reports
         $stmt = $pdo->prepare("SELECT * FROM reports WHERE processed = 0 ORDER BY id LIMIT 5000");
         $stmt->execute();
